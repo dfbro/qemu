@@ -13,7 +13,7 @@ export XDG_RUNTIME_DIR=$HOME
 echo "Installing the fedora container..."
 wget https://github.com/dfbro/qemu/raw/refs/heads/main/qemu.tar
 udocker import --clone --tocontainer --name=qemu qemu.tar
-qemu setup --execmode=F1 qemu
+udocker setup --execmode=F1 qemu
 
 # Create the script to be executed inside the container
 rm qemu.tar
@@ -23,8 +23,8 @@ cat > start_container.sh << EOF
 #!/bin/sh
 export XDG_RUNTIME_DIR=$HOME
 export PATH=`pwd`/udocker-1.3.17/udocker:$PATH
-op setup --execmode=F1 qemu
-op run qemu /bin/bash /start.sh
+udocker setup --execmode=F1 qemu
+udocker run qemu /bin/bash /start.sh
 EOF
 chmod +x start_container.sh
 echo "Setup complete. You can now run the container with: ./start_container.sh"
